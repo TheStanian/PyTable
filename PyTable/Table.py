@@ -7,13 +7,13 @@ import Utils
 #       clean up configuration of tables, rows and cells.
 #       Document more
 #       Allow title width to be larger than data
-#       Allow for configuration of tab expansion width
 
 class CellFormatOptions:
     def __init__(self, halign="left", valign="top", 
                     htrim=True, vtrim=True, 
                     vtrim_whitespace=True, 
-                    pad_char = " ", hpadding=1, vpadding=0):
+                    pad_char = " ", hpadding=1, 
+                    vpadding=0, tab_expansion = 4):
         self.halign = halign
         self.valign = valign
         self.htrim = htrim
@@ -22,6 +22,7 @@ class CellFormatOptions:
         self.pad_char = pad_char
         self.hpadding = hpadding
         self.vpadding = vpadding
+        self.tab_expansion = tab_expansion
 
 
 class TableFormatOptions:
@@ -52,7 +53,8 @@ class Cell:
             self.necessary_width, self.necessary_height, self.content \
             = Utils.string_dimensions(str(content), self.cell_format_options.htrim,
                                         self.cell_format_options.vtrim, 
-                                        self.cell_format_options.vtrim_whitespace)
+                                        self.cell_format_options.vtrim_whitespace,
+                                        self.cell_format_options.tab_expansion)
             self.necessary_width += 2*self.cell_format_options.hpadding
             self.necessary_height += 2*self.cell_format_options.vpadding
 
@@ -152,7 +154,6 @@ class RowMajorTable:
         # Calculate column widths and row heights
         for row_index, row in enumerate(self.rows):
             for cell_index, cell in enumerate(row.cells):
-                row_index
                 column_widths[cell_index] = max(column_widths[cell_index], cell.necessary_width)
                 row_heights[row_index] = max(row_heights[row_index], cell.necessary_height)
 

@@ -24,10 +24,10 @@ if __name__ == "__main__":
     table.add_row("Because I expand tabs," + linesep + "it also means it can" + linesep + "handle code pretty" + linesep + "nicely..", "have a look:",
 """
 def main():
-    print "Hello world!"
+\tprint "Hello world!"
 
 if __name__ == "__main__":
-    main()
+\tmain()
 """    
     )
     table.add_row("There's still a lot" + linesep + "to be improved", 

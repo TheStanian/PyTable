@@ -71,12 +71,12 @@ def valign(string, height, align = "top"):
     return os.linesep.join(lines)
 
 
-def string_dimensions(string, htrim=False, vtrim=True, vtrim_whitespace = True):
+def string_dimensions(string, htrim=False, vtrim=True, vtrim_whitespace = True, tab_expansion = 4):
     #todo: trim left to minimum position for htrim
     lines = string.split(os.linesep)
 
     def trim_line(line, trim):
-        return line.expandtabs().rstrip() if trim else line.expandtabs()
+        return line.expandtabs(tab_expansion).rstrip() if trim else line.expandtabs(tab_expansion)
 
     def empty_line(line):
         return len(trim_line(line, vtrim_whitespace)) == 0
@@ -108,12 +108,12 @@ def string_dimensions(string, htrim=False, vtrim=True, vtrim_whitespace = True):
     return (w, h, os.linesep.join([trim_line(line, htrim) for line in lines[begin_line_index : end_line_index+1]]))
 
 
-def string_squarify(string, pad_char = " "):
-    w, h, l = string_dimensions(string, htrim=False, vtrim=False, vtrim_whitespace = False)
+def string_squarify(string, pad_char = " ", tab_expansion = 4):
+    w, h, l = string_dimensions(string, htrim=False, vtrim=False, vtrim_whitespace = False, tab_expansion = tab_expansion)
     return halign(valign(string, h), w, pad_char = pad_char)
 
 
-def string_padding(string, hpad = 1, vpad = 0, pad_char = " "):
-    w, h, l = string_dimensions(string, htrim=False, vtrim=False, vtrim_whitespace = False)
+def string_padding(string, hpad = 1, vpad = 0, pad_char = " ", tab_expansion = 4):
+    w, h, l = string_dimensions(string, htrim=False, vtrim=False, vtrim_whitespace = False, tab_expansion = tab_expansion)
     return halign(valign(string, h + 2*vpad, align="center"), w + 2*hpad, align="center")
 
