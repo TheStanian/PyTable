@@ -5,6 +5,7 @@ A python ascii-art table drawing library with support for multi-line cells (so t
 ## Example
 An example (code in example.py) of the generated table:
 
+```
 +-PyTable----------------+--------------------+----------------------------------------+
 | Hello world.           | This is PyTable.   | It is a table printing library.        |
 +------------------------+--------------------+----------------------------------------+
@@ -29,3 +30,4 @@ An example (code in example.py) of the generated table:
 | to be improved         | be useful already  | in a structured fashion, why not       |
 |                        |                    | give PyTable a go?                     |
 +------------------------+--------------------+----------------------------------------+
+```
