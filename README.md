@@ -12,13 +12,13 @@ An example (code in example.py) of the generated table:
 | It has support for     |                    |                  and horizontal align. |
 | multi-line strings,    | vertical align     |                                        |
 +------------------------+--------------------+----------------------------------------+
-|                        |                    |                                        |
-|        padding         |      is also       |               supported.               |
-|                        |                    |                                        |
-+------------------------+--------------------+----------------------------------------+
 | This means it can      | like so:           | #=Subtable============#==============# |
 | do tables in tables,   |                    | # This is a subtable. | Neat, right? # |
 |                        |                    | #=====================#==============# |
++------------------------+--------------------+----------------------------------------+
+|                        |                    |                                        |
+|        Padding         |      is also       |               supported.               |
+|                        |                    |                                        |
 +------------------------+--------------------+----------------------------------------+
 | Because I expand tabs, | have a look:       | def main():                            |
 | it also means it can   |                    |     print "Hello world!"               |
