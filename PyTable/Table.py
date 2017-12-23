@@ -7,6 +7,8 @@ import Utils
 #       clean up configuration of tables, rows and cells.
 #       Document more
 #       Allow title width to be larger than data
+#       Make box and seps more configurable (e.g. left and right vs just 1 character)
+#       Multi-character sequences for boxes and separation? ;o
 
 class CellFormatOptions:
     def __init__(self, halign="left", valign="top", 
