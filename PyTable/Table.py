@@ -2,13 +2,15 @@ import os, copy
 import Utils
 
 # TODO:
-#       column major tables
-#       support for starting index for row without having to manually pad
-#       clean up configuration of tables, rows and cells.
-#       Document more
-#       Allow title width to be larger than data
-#       Make box and seps more configurable (e.g. left and right vs just 1 character)
-#       Multi-character sequences for boxes and separation? ;o
+#       5. column major tables
+#       x. support for starting index for row without having to manually pad
+#       3. clean up configuration of tables, rows and cells.
+#       x. Document
+#       1. Allow title width to be larger than data
+#       2. Make box and seps more configurable (e.g. left and right vs just 1 character)
+#       4. Multi-character sequences for boxes and separation? ;o
+#       6. Allow for per-line horizontal padding?
+#       7. Expand to a full-fledged float environment for cells?
 
 class CellFormatOptions:
     def __init__(self, halign="left", valign="top", 
@@ -35,14 +37,16 @@ class TableFormatOptions:
                     vsep = True):
         self.title = title
         self.box = box
-        self.box_hsep_char = box_hsep_char
-        self.box_vsep_char = box_vsep_char
+        self.box_hsep_tchar = box_hsep_char
+        self.box_hsep_bchar = box_hsep_char
+        self.box_vsep_lchar = box_vsep_char
+        self.box_vsep_rchar = box_vsep_char
         self.box_isep_char = box_isep_char
         self.hsep_char = hsep_char
         self.vsep_char = vsep_char
         self.isep_char = isep_char
         self.hsep = hsep
-        self.vsep = vsep        
+        self.vsep = vsep
 
 
 class Cell:
@@ -163,8 +167,10 @@ class RowMajorTable:
         # Shorten grabbing data from the format options
         box = self.table_format_options.box
         title = self.table_format_options.title
-        b_hsep_c = self.table_format_options.box_hsep_char
-        b_vsep_c = self.table_format_options.box_vsep_char
+        b_hsep_tc = self.table_format_options.box_hsep_tchar
+        b_hsep_bc = self.table_format_options.box_hsep_bchar
+        b_vsep_lc = self.table_format_options.box_vsep_lchar 
+        b_vsep_rc = self.table_format_options.box_vsep_rchar
         b_isep_c = self.table_format_options.box_isep_char
         hsep_c = self.table_format_options.hsep_char
         vsep_c = self.table_format_options.vsep_char
@@ -178,7 +184,7 @@ class RowMajorTable:
 
         # Top box line
         if box:
-            top_box_line = b_isep_c + b_hsep_c
+            top_box_line = b_isep_c + b_hsep_tc
             if title:
                 top_box_line += title
 
@@ -190,12 +196,12 @@ class RowMajorTable:
                     raise ValueError("Title \"{}\" too big for table.".format(title))
                 acc_len_col += column_widths[col]
                 col += 1
-            top_box_line = Utils.halign(top_box_line, acc_len_col + (col-1) * int(vsep), pad_char = b_hsep_c)
+            top_box_line = Utils.halign(top_box_line, acc_len_col + (col-1) * int(vsep), pad_char = b_hsep_tc)
 
             for i in range(col, num_cols):
                 if vsep:
                     top_box_line += b_isep_c
-                top_box_line += b_hsep_c * column_widths[i]
+                top_box_line += b_hsep_tc * column_widths[i]
 
             top_box_line += b_isep_c
             lines.append(top_box_line)
@@ -238,7 +244,7 @@ class RowMajorTable:
             for row_line_index in range(row_height):
                 s = ""
                 if box:
-                    s += b_vsep_c
+                    s += b_vsep_lc
 
                 for cell_index, cell in enumerate(row.cells):
                     s += cell.lines[row_line_index]
@@ -246,7 +252,7 @@ class RowMajorTable:
                         s += vsep_c
 
                 if box:
-                    s += b_vsep_c
+                    s += b_vsep_rc
 
                 lines.append(s)
 
@@ -260,7 +266,7 @@ class RowMajorTable:
             s += b_isep_c
 
             for col_index, column_width in enumerate(column_widths):
-                s += b_hsep_c * column_width
+                s += b_hsep_bc * column_width
                 if vsep and col_index < len(column_widths) - 1:
                     s += b_isep_c
 

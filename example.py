@@ -1,5 +1,5 @@
 from os import linesep
-from PyTable.Table import RowMajorTable, Cell, CellFormatOptions
+from PyTable.Table import RowMajorTable, Cell, CellFormatOptions, TableFormatOptions
 
 if __name__ == "__main__":
     table = RowMajorTable()
@@ -9,11 +9,8 @@ if __name__ == "__main__":
                     Cell("vertical align", cell_format_options=CellFormatOptions(valign="bottom")),
                     Cell("and horizontal align.", cell_format_options=CellFormatOptions(halign="right")))
     
-    subtable = RowMajorTable()
-    subtable.table_format_options.title = "Subtable"
-    subtable.table_format_options.box_hsep_char = "="
-    subtable.table_format_options.box_vsep_char = "#"
-    subtable.table_format_options.box_isep_char = "#"
+    subtable = RowMajorTable(table_format_options = TableFormatOptions(title="Subtable",
+                                box_hsep_char = "=", box_vsep_char = "#", box_isep_char = "#"))
     subtable.add_row("This is a subtable.", "Neat, right?")
     
     table.add_row("This means it can" + linesep + "do tables in tables,", "like so:", subtable)
