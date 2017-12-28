@@ -11,6 +11,7 @@ import Utils
 #       4. Multi-character sequences for boxes and separation? ;o
 #       6. Allow for per-line horizontal padding?
 #       7. Expand to a full-fledged float environment for cells?
+#       x. Move title to table instead of format
 
 class CellFormatOptions:
     def __init__(self, halign="left", valign="top", 
@@ -30,12 +31,11 @@ class CellFormatOptions:
 
 
 class TableFormatOptions:
-    def __init__(self, title = None, box = True,
+    def __init__(self, box = True,
                     box_hsep_char = "-", box_vsep_char = "|", box_isep_char = "+", 
                     hsep_char = "-", vsep_char = "|", 
                     isep_char = "+", hsep = True,
                     vsep = True):
-        self.title = title
         self.box = box
         self.box_hsep_tchar = box_hsep_char
         self.box_hsep_bchar = box_hsep_char
@@ -121,10 +121,11 @@ class Row:
 
 
 class RowMajorTable:
-    def __init__(self, table_format_options = TableFormatOptions(), 
+    def __init__(self, title = None, table_format_options = TableFormatOptions(), 
                        cell_format_options = CellFormatOptions()):
         self.table_format_options = copy.copy(table_format_options)
         self.cell_format_options = cell_format_options
+        self.title = title
 
         self.rows = []
 
@@ -166,7 +167,7 @@ class RowMajorTable:
         
         # Shorten grabbing data from the format options
         box = self.table_format_options.box
-        title = self.table_format_options.title
+        title = self.title
         b_hsep_tc = self.table_format_options.box_hsep_tchar
         b_hsep_bc = self.table_format_options.box_hsep_bchar
         b_vsep_lc = self.table_format_options.box_vsep_lchar 
