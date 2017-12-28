@@ -11,7 +11,6 @@ import Utils
 #       4. Multi-character sequences for boxes and separation? ;o
 #       6. Allow for per-line horizontal padding?
 #       7. Expand to a full-fledged float environment for cells?
-#       x. Move title to table instead of format
 
 class CellFormatOptions:
     def __init__(self, halign="left", valign="top", 
